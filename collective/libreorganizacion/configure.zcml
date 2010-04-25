@@ -1,0 +1,16 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+              xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+              xmlns:five="http://namespaces.zope.org/five"
+              i18n_domain="libreorganizacion" >
+
+<five:registerPackage package="." initialize=".initialize" />
+
+<genericsetup:registerProfile
+       name="LibreOrganizacion"
+       title="LibreOrganizacion"
+       directory="profiles/default"
+       description="Extension profile for LibreOrganizacion type."
+       provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+</configure>

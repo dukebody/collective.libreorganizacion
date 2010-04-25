@@ -1,0 +1,72 @@
+<html metal:use-macro="here/main_template/macros/master"
+		xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="libreorganizacion" >
+<body>
+
+<div metal:fill-slot="main" >
+
+        <!-- header, H1 with title in it -->
+        <metal:header define-macro="header">
+        </metal:header>
+                
+        <!-- body macro where all the fields are -->
+        <metal:body define-macro="body">
+        
+                <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+        <h1 tal:content="context/Title">Title</h1>
+
+        <div tal:replace="structure provider:plone.belowcontenttitle" />
+        
+        <p class="documentDescription" tal:content="structure here/getSlogan" />
+        
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+        
+        <div class="newsImageContainer"
+             tal:condition="here/image_mini|nothing">
+            <a href="#"
+               tal:attributes="href string:$here_url/image/image_view_fullscreen"
+               id="parent-fieldname-image">
+               <img tal:replace="structure python: here.tag(scale='mini', css_class='newsImage')" src="" alt="" />
+               <!-- POSIBLES CÓDIGOS PARA ANNOTATIONSTORAGE:
+<img tal:replace="python: context.getField('image').tag(context, scale='mini', css_class='newsImage')" src="" alt="" />
+<img tal:replace="python: context.getField('image').tag(context, scale='mini', css_class='newsImage')" />
+<img tal:replace="python: context.getField('image').tag(scale='mini', css_class='newsImage')" src="" alt="" />
+<img tal:replace="python: context.getField('image').tag(context, size='mini')" src="" alt="" />
+<img tal:replace="python: context.getField('image').tag(context, size='mini')" />
+               <img tal:replace="python: context.getField('image').tag(context, scale='mini')" /> -->
+            </a>
+        </div>
+        
+        <p>
+        <metal:field use-macro="python:context.widget('text', mode='view')">
+        Text
+        </metal:field>
+        </p>
+        
+        <p><strong><span i18n:translate="p_topics">Topics:</span></strong> 
+        <span tal:content="structure here/getTopics" /></p>
+        
+        <p><strong><span i18n:translate="p_scope">Scope:</span></strong> 
+        <span tal:content="structure here/getScope" /></p>
+        
+        <p><strong><span i18n:translate="p_country">Country:</span></strong>
+        <span tal:content="structure here/getCountry" /></p>
+        
+                        
+        </metal:body>
+                
+        <!-- folderlisting that shows sub-objects if there are any -->
+        <metal:folderlisting define-macro="folderlisting"> 
+        </metal:folderlisting>
+        
+        <!-- footer, by line created date etc. -->
+        <metal:footer define-macro="footer">
+        </metal:footer>
+
+    
+</div>
+
+</body>
+
+</html>
