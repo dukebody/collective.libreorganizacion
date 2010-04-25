@@ -14,6 +14,10 @@ class TestProductInstall(LibreOrganizacionTestCase):
         for t in self.types:
             self.failUnless(t in self.portal.portal_factory.getFactoryTypes().keys(),
                             '%s content type not installed' % t)
+
+    def testOnlyManagerCanAddKeywords(self):
+        sp = self.portal.portal_properties.site_properties
+        self.failUnlessEqual(sp.getProperty('allowRolesToAddKeywords'), ('Manager',))
                             
 class TestInstantiation(LibreOrganizacionTestCase):
     
