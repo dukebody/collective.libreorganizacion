@@ -26,6 +26,7 @@ setup(name='collective.libreorganizacion',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
+          'Products.ATCountryWidget',
       ],
       entry_points="""
       # -*- Entry points: -*-
