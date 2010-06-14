@@ -45,23 +45,23 @@
         </p>
         
         <p>
-	  <strong><span i18n:translate="p_topics">Topics:</span></strong> 
-	  <metal:field use-macro="python:context.widget('topics', mode='view')">
+          <strong><span i18n:translate="p_topics">Topics:</span></strong> 
+          <metal:field use-macro="python:context.widget('topics', mode='view')">
 	    Topics
-	  </metal:field>
-	</p>
+          </metal:field>
+        </p>
         
         <p>
 	  <strong><span i18n:translate="p_scope">Scope:</span></strong>
-	  <metal:field use-macro="python:context.widget('scope', mode='view')">
-	    Scope
-	  </metal:field>
-	</p>
+          <metal:field use-macro="python:context.widget('scope', mode='view')">
+           Scope
+          </metal:field>
+        </p>
         
         <p>
-	  <strong><span i18n:translate="p_country">Country:</span></strong>
-	  <metal:field use-macro="python:context.widget('country', mode='view')">
-	    Country
+          <strong><span i18n:translate="p_country">Country:</span></strong>
+          <metal:field use-macro="python:context.widget('country', mode='view')">
+           Country
 	  </metal:field>
 	</p>
         
