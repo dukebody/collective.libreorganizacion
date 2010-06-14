@@ -141,20 +141,32 @@
                     </div>
 
                     <p class="tileBody">
-                        <span tal:omit-tag="" tal:condition="not:item_description">
+                        <span tal:omit-tag="" tal:condition="not:item_object/slogan">
                             &nbsp;
                         </span>
-                        <span class="description" tal:content="item_description">
-                            description
+                        <span class="description" tal:content="item_object/slogan">
+                            slogan
                         </span>
                     </p>
 
                     <p class="tileBody">
-                        <span tal:omit-tag="" tal:condition="not:item_type_title">
+                        <span tal:omit-tag="" tal:condition="not:item_object/topics">
                             &nbsp;
                         </span>
-                        <span class="description" tal:content="item_type_title">
-                            description
+                        <span class="description" tal:content="item_object/topics">
+                            topics
+                        </span>
+                        <span tal:omit-tag="" tal:condition="not:item_object/scope">
+                            &nbsp;
+                        </span>
+                        <span class="description" tal:content="item_object/scope">
+                            scope
+                        </span>
+                        <span tal:omit-tag="" tal:condition="not:item_object/country">
+                            &nbsp;
+                        </span>
+                        <span class="description" tal:content="item_object/country">
+                            country
                         </span>
                     </p>
 
@@ -195,3 +207,4 @@
 
 </body>
 </html>
+
