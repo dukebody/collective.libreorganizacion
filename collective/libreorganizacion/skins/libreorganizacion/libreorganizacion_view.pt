@@ -44,14 +44,26 @@
         </metal:field>
         </p>
         
-        <p><strong><span i18n:translate="p_topics">Topics:</span></strong> 
-        <span tal:content="structure here/getTopics" /></p>
+        <p>
+	  <strong><span i18n:translate="p_topics">Topics:</span></strong> 
+	  <metal:field use-macro="python:context.widget('topics', mode='view')">
+	    Topics
+	  </metal:field>
+	</p>
         
-        <p><strong><span i18n:translate="p_scope">Scope:</span></strong> 
-        <span tal:content="structure here/getScope" /></p>
+        <p>
+	  <strong><span i18n:translate="p_scope">Scope:</span></strong>
+	  <metal:field use-macro="python:context.widget('scope', mode='view')">
+	    Scope
+	  </metal:field>
+	</p>
         
-        <p><strong><span i18n:translate="p_country">Country:</span></strong>
-        <span tal:content="structure here/getCountry" /></p>
+        <p>
+	  <strong><span i18n:translate="p_country">Country:</span></strong>
+	  <metal:field use-macro="python:context.widget('country', mode='view')">
+	    Country
+	  </metal:field>
+	</p>
         
                         
         </metal:body>
