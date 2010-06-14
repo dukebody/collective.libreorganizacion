@@ -153,21 +153,15 @@
                         <span tal:omit-tag="" tal:condition="not:item_object/topics">
                             &nbsp;
                         </span>
-                        <span class="description" tal:content="item_object/topics">
-                            topics
-                        </span>
+                        <metal:field use-macro="python:item_object.widget('topics', mode='view')" />
                         <span tal:omit-tag="" tal:condition="not:item_object/scope">
                             &nbsp;
                         </span>
-                        <span class="description" tal:content="item_object/scope">
-                            scope
-                        </span>
+                        <metal:field use-macro="python:item_object.widget('scope', mode='view')" />
                         <span tal:omit-tag="" tal:condition="not:item_object/country">
                             &nbsp;
                         </span>
-                        <span class="description" tal:content="item_object/country">
-                            country
-                        </span>
+                        <metal:field use-macro="python:item_object.widget('country', mode='view')" />
                     </p>
 
                     <p class="tileFooter">
