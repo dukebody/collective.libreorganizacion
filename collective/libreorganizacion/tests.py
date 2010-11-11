@@ -87,6 +87,18 @@ class TestProductInstall(unittest.TestCase):
         self.assertRaises(Unauthorized,
             self.layer['folder'].invokeFactory, 'collective.libreorganizacion.proposal', 'proposal1')
 
+    def testElectorsCanCommentOnProposals(self):
+        """Comprobar que un Elector puede comentar las propuestas"""
+        portal = self.layer['portal']
+        permissions = [p['name'] for p in portal.permissionsOfRole('Elector') if p['selected']]
+        self.assertTrue('Reply to item' in permissions)
+
+    def testNonElectorsCantCommentOnProposals(self):
+        """Comprobar que un no Elector NO puede comentar las propuestas"""
+        portal = self.layer['portal']
+        permissions = [p['name'] for p in portal.permissionsOfRole('Member') if p['selected']]
+        self.assertFalse('Reply to item' in permissions)
+
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()

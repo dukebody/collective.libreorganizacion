@@ -30,6 +30,7 @@ setup(name='collective.libreorganizacion',
           'Plone',
           'plone.app.dexterity',
           'plone.namedfile [blobs]',
+          'plone.app.discussion',
       ],
       extras_require={
           'test': [

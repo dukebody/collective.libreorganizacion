@@ -10,5 +10,11 @@
       <role name="Manager" />
       <role name="Elector" />
     </permission>
+    <permission
+        name="Reply to item"
+        acquire="True">
+      <role name="Manager" />
+      <role name="Elector" />
+    </permission>
   </permissions>
 </rolemap>
