@@ -1,4 +1,8 @@
+# -*- coding: utf-8 -*-
+
 import unittest2 as unittest
+
+from AccessControl import Unauthorized
 
 from plone.testing import z2
 from plone.app.testing.layers import IntegrationTesting
@@ -77,6 +81,11 @@ class TestProductInstall(unittest.TestCase):
         login(portal, 'elector')
         self.layer['folder'].invokeFactory('collective.libreorganizacion.proposal', 'proposal1')
 
+    def testNonElectorsCantCreateProposals(self):
+        """Comprobar que un no Elector NO puede crear propuestas"""
+        # el usuario por defecto sólo es miembro, pero no elector
+        self.assertRaises(Unauthorized,
+            self.layer['folder'].invokeFactory, 'collective.libreorganizacion.proposal', 'proposal1')
 
 def test_suite():
     from unittest import TestSuite, makeSuite

@@ -4,5 +4,11 @@
     <role name="Elector" />
   </roles>
   <permissions>
+    <permission
+        name="collective.libreorganizacion: Add Proposal"
+        acquire="True">
+      <role name="Manager" />
+      <role name="Elector" />
+    </permission>
   </permissions>
 </rolemap>
