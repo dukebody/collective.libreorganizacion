@@ -36,7 +36,6 @@ LIBREORGANIZACION_FUNCTIONAL_TESTING = FunctionalTesting(bases=(LIBREORGANIZACIO
 class TestProductInstall(unittest.TestCase):
     layer = LIBREORGANIZACION_INTEGRATION_TESTING
 
-
     def testTypesInstalled(self):
         pt = getToolByName(self.layer['portal'], 'portal_types')
         self.failUnless('collective.libreorganizacion.proposal' in pt.objectIds(),
@@ -52,6 +51,11 @@ class TestProductInstall(unittest.TestCase):
         topic_type = pt.Topic
         self.failUnless('custom_folder_summary_view' in \
                         topic_type.getProperty('view_methods'))
+
+
+    def testElectorRole(self):
+        """Comprobar que existe el rol 'Elector'"""
+        self.assertTrue('Elector' in self.layer['portal'].valid_roles())
 
 
 def test_suite():
