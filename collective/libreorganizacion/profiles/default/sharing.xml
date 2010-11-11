@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<sharing xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+         i18n:domain="collective.libreorganizacion">
+  <role
+      id="Elector"
+      title="Elector"
+      permission="Manage portal"
+      i18n:attributes="title"
+      />
+</sharing>
