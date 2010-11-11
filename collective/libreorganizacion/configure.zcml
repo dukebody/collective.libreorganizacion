@@ -1,16 +1,30 @@
 <configure xmlns="http://namespaces.zope.org/zope"
               xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
               xmlns:five="http://namespaces.zope.org/five"
-              i18n_domain="libreorganizacion" >
+              xmlns:cmf="http://namespaces.zope.org/cmf"
+              xmlns:grok="http://namespaces.zope.org/grok"
+              i18n_domain="collective.libreorganizacion" >
 
-<five:registerPackage package="." initialize=".initialize" />
+  <five:registerPackage package="." initialize=".initialize" />
 
-<genericsetup:registerProfile
-       name="LibreOrganizacion"
-       title="LibreOrganizacion"
-       directory="profiles/default"
-       description="Extension profile for LibreOrganizacion type."
-       provides="Products.GenericSetup.interfaces.EXTENSION"
+  <!-- Include configuration for dependencies listed in setup.py -->
+  <includeDependencies package="." />
+
+  <!-- Grok the package to initialise schema interfaces and content classes -->
+  <grok:grok package="." />
+
+  <genericsetup:registerProfile
+      name="default"
+      title="collective.libreorganizacion"
+      directory="profiles/default"
+      description="Extension profile for LibreOrganizacion stuff."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <cmf:registerDirectory
+      name="skins"
+      directory="skins"
+      recursive="True"
       />
 
 </configure>

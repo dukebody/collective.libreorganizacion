@@ -26,8 +26,16 @@ setup(name='collective.libreorganizacion',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
-          'Products.ATCountryWidget',
+          'PIL==1.1.6',
+          'Plone',
+          'plone.app.dexterity',
+          'plone.namedfile [blobs]',
       ],
+      extras_require={
+          'test': [
+              'plone.app.testing',
+              ]
+          },
       entry_points="""
       # -*- Entry points: -*-
       [z3c.autoinclude.plugin]
