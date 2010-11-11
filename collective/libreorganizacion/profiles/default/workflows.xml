@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<object name="portal_workflow">
+  <object name="collective.libreorganizacion.proposal_workflow" meta_type="Workflow" />
+  <bindings>
+    <type type_id="collective.libreorganizacion.proposal">
+      <bound-workflow workflow_id="collective.libreorganizacion.proposal_workflow" />
+    </type>
+  </bindings>
+</object>

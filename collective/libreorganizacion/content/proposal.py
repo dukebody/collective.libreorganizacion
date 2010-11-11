@@ -3,10 +3,12 @@
 # CMF and Zope imports
 from zope import schema
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
-from zope.interface import Interface
+from zope.interface import Interface, implements
 
+from plone.dexterity.content import Container
 from plone.app.textfield import RichText
 from plone.namedfile.field import NamedImage
+from Products.CMFPlone.interfaces import INonStructuralFolder
 
 from collective.libreorganizacion import _
 
@@ -62,3 +64,8 @@ class IProposal(Interface):
     country = schema.TextLine(
         title=_(u'País'),
         )
+
+
+class Proposal(Container):
+    """Container type with a marker interface ad-hoc to allow comments."""
+    implements(INonStructuralFolder)

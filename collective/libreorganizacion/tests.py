@@ -15,7 +15,10 @@ from plone.app.testing import setRoles
 from plone.app.testing import login, logout
 from plone.app.testing import TEST_USER_NAME
 
+from plone.app.workflow.interfaces import ISharingPageRole
+
 from zope.configuration import xmlconfig
+from zope.component import getUtilitiesFor
 
 from Products.CMFCore.utils import getToolByName
 
@@ -75,6 +78,19 @@ class TestProductInstall(unittest.TestCase):
         """Comprobar que existe el rol 'Elector'"""
         self.assertTrue('Elector' in self.layer['portal'].valid_roles())
 
+    def testProposalWorkflow(self):
+        """Comprobar que el tipo Propuesta está asociado al
+        workflow correspondiente."""
+        portal = self.layer['portal']
+        wt = portal.portal_workflow
+        self.failUnless('collective.libreorganizacion.proposal_workflow' in wt.getChainForPortalType('collective.libreorganizacion.proposal'))
+
+    def testElectorInSharing(self):
+        """Comprobar que se puede asignar el rol Elector desde la
+        pestaña 'Compartir'."""
+        roles = dict(getUtilitiesFor(ISharingPageRole))
+        self.assertTrue('Elector' in roles)
+
     def testElectorCanCreateProposals(self):
         """Comprobar que un Elector puede crear propuestas"""
         portal = self.layer['portal']
@@ -98,6 +114,7 @@ class TestProductInstall(unittest.TestCase):
         portal = self.layer['portal']
         permissions = [p['name'] for p in portal.permissionsOfRole('Member') if p['selected']]
         self.assertFalse('Reply to item' in permissions)
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite

@@ -15,7 +15,7 @@
  <property name="schema">collective.libreorganizacion.content.proposal.IProposal</property>
 
  <!-- class used for content items -->
- <property name="klass">plone.dexterity.content.Container</property>
+ <property name="klass">collective.libreorganizacion.content.proposal.Proposal</property>
 
  <!-- add permission -->
  <property name="add_permission">collective.libreorganizacion.AddProposal</property>
