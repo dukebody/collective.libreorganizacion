@@ -33,15 +33,17 @@ class IProposal(Interface):
     """
 
     title = schema.TextLine(
-        title=_(u'Slogan'),
+        title=_(u'Eslogan'),
         )
 
     image = NamedImage(
         title=_(u'Imagen'),
+        required=False,
         )
 
     text = RichText(
         title=_(u'Texto'),
+        description=_(u'Explica en qué consiste la propuesta.')
         )
 
     topics = schema.Choice(
