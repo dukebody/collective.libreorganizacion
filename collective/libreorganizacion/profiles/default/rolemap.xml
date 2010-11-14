@@ -16,5 +16,11 @@
       <role name="Manager" />
       <role name="Elector" />
     </permission>
+    <permission
+        name="Modify view template"
+        acquire="False">
+      <role name="Manager" />
+      <role name="Editor" />
+    </permission>
   </permissions>
 </rolemap>
