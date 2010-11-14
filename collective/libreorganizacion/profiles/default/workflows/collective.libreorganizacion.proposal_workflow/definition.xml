@@ -81,6 +81,10 @@
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
   </permission-map>
+  <permission-map name="Content Ratings: User Rate" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
  </state>
 
  <state state_id="rejected" title="Rechazada"
