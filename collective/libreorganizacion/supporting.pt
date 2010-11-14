@@ -1,0 +1,77 @@
+<div class="Rating"
+     i18n:domain="collective.libreorganizacion"
+     tal:define="view_url string:${view/content_url}/++${view/traversal_name}++${context/name};
+                 current view/current_rating;
+                 star_size view/star_size|python:25;
+                 values view/vocabulary;
+                 count python:len(values);
+                 base_width python:count*star_size;
+                 cat_name python:context.name or '_default'"
+     tal:attributes="class python:'Rating' + (star_size &lt;= 12 and ' small-star' or '') + ' kssattr-category-' + cat_name;
+                     id string:rating-stars-view-${cat_name};">
+
+<div class="AverageRating"
+     tal:condition="context/can_read">
+  <label>
+    <span class="RatingTitle"
+          tal:content="context/title">Título</span>
+    <span class="VoteCount"
+          i18n:translate="user_vote_count">
+          (<span tal:omit-tag=""
+                   tal:content="context/numberOfRatings"/>)</span>
+  </label>
+</div>
+<div class="UserRating"
+     tal:condition="view/can_rate">
+  <label i18n:translate="your_rating">
+    Tu apoyo:
+  </label>
+  <a class="DeleteRating"
+     href=""
+     title="Retirar mi apoyo"
+     i18n:translate=""
+     i18n:attributes="title"
+     tal:condition="python:current is not None"
+     tal:attributes="href string:${view_url}/remove_rating">
+    Retirar mi apoyo
+  </a>
+  <span class="DeleteRating Disabled"
+     title="No se está apoyando"
+     i18n:translate=""
+     i18n:attributes="title"
+     tal:condition="python:current is None">
+    No se está apoyando
+  </span>
+  <ul class="star-rating"
+      tal:attributes="style string:width:${base_width}px;">
+
+    <li class="current-rating"
+        tal:define="width python:((current or 0)/count)*100"
+        tal:attributes="style string:width:${width}%;
+                        title current;"
+        tal:content="current">
+      3/5 estrellas.
+    </li>
+    <tal:repeat tal:repeat="value values">
+      <!-- The first link takes up the full length each subsequent one
+           takes less, but has a higher z-index
+      -->
+      <li>
+        <a href="#"
+           class="rate star-1"
+           title="Excellent"
+           tal:define="iter repeat/value/number;
+                       z_index python:count - iter + 1;
+                       width python:100 - (float(count - iter)/count)*100;"
+           tal:attributes="href string:${view_url}/rate?value=${value/value};
+                           title value/title;
+                           class string:rate star-${iter};
+                           style string:width: ${width}%;; z-index: ${z_index};"
+           tal:content="value/value">
+          excelente
+        </a>
+      </li>
+    </tal:repeat>
+  </ul>
+</div>
+</div>

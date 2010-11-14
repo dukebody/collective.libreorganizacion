@@ -1,8 +1,10 @@
 <configure xmlns="http://namespaces.zope.org/zope"
               xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+              xmlns:browser="http://namespaces.zope.org/browser"
               xmlns:five="http://namespaces.zope.org/five"
               xmlns:cmf="http://namespaces.zope.org/cmf"
               xmlns:grok="http://namespaces.zope.org/grok"
+              xmlns:contentratings="http://namespaces.plone.org/contentratings"
               i18n_domain="collective.libreorganizacion" >
 
   <five:registerPackage package="." initialize=".initialize" />
@@ -31,6 +33,29 @@
   <permission
       id="collective.libreorganizacion.AddProposal"
       title="collective.libreorganizacion: Add Proposal"
+      />
+
+  <!-- supporting stuff -->
+  <utility
+      name="collective.libreorganizacion.support_vocab"
+      component=".supporting.support_vocab"
+      />
+
+  <browser:page
+      for="contentratings.interfaces.IUserRating"
+      class=".supporting.SupportView"
+      permission="zope.Public"
+      allowed_attributes="rate remove_rating"
+      name="support_view"
+      template="supporting.pt"
+      />
+
+  <contentratings:category
+      for=".content.proposal.IProposal"
+      title="Apoyos"
+      view_name="support_view"
+      read_expr="python: checkPermission('Content Ratings: View User Rating', context)"
+      write_expr="python:checkPermission('Content Ratings: User Rate', context)"
       />
 
 </configure>

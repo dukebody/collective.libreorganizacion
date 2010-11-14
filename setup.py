@@ -31,6 +31,7 @@ setup(name='collective.libreorganizacion',
           'plone.app.dexterity',
           'plone.namedfile [blobs]',
           'plone.app.discussion',
+          'plone.contentratings',
       ],
       extras_require={
           'test': [
