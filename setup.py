@@ -26,7 +26,7 @@ setup(name='collective.libreorganizacion',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
-          'PIL==1.1.6',
+          'Pillow',
           'Plone',
           'plone.app.dexterity',
           'plone.namedfile [blobs]',
