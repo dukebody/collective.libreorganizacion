@@ -38,6 +38,11 @@ class IProposal(Interface):
         title=_(u'Eslogan'),
         )
 
+    description = schema.Text(
+        title=_(u'Resumen'),
+        max_length=500,
+        )
+
     image = NamedImage(
         title=_(u'Imagen'),
         required=False,
