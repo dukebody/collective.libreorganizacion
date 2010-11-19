@@ -32,6 +32,7 @@ setup(name='collective.libreorganizacion',
           'plone.namedfile [blobs]',
           'plone.app.discussion',
           'plone.contentratings',
+          'Products.PlonePopoll',
       ],
       extras_require={
           'test': [

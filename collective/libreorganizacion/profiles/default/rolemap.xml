@@ -16,11 +16,29 @@
       <role name="Manager" />
       <role name="Elector" />
     </permission>
+
+    <!-- normal users can't change the display view -->
     <permission
         name="Modify view template"
         acquire="False">
       <role name="Manager" />
       <role name="Editor" />
     </permission>
+
+    <!-- voting -->
+    <permission
+        name="Popoll: Vote"
+        acquire="False">
+      <role name="Manager" />
+      <role name="Editor" />
+      <role name="Elector" />
+    </permission>
+    <permission
+        name="Popoll: Edit polls"
+        acquire="False">
+      <role name="Manager" />
+      <role name="Editor" />
+    </permission>
+
   </permissions>
 </rolemap>

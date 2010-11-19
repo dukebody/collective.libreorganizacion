@@ -11,7 +11,11 @@
  <permission>Access contents information</permission>
  <permission>Modify portal content</permission>
  <permission>View</permission>
+
  <permission>Content Ratings: User Rate</permission>
+
+ <permission>Popoll: Add polls</permission>
+ <permission>Popoll: Vote</permission>
 
 
  <state state_id="draft" title="Borrador" i18n:attributes="title">
@@ -40,6 +44,14 @@
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
+  <permission-map name="Popoll: Add polls" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Popoll: Vote" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
  </state>
 
  <state state_id="pending" title="Buscando apoyos"
@@ -63,12 +75,51 @@
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
+  <permission-map name="Popoll: Add polls" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Popoll: Vote" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
  </state>
 
  <state state_id="plenary" title="En plenario"
         i18n:attributes="title">
   <description i18n:translate="">
     La propuesta ha recibido un número suficiente de apoyos y se está debatiendo en el plenario.
+  </description>
+  <exit-transition transition_id="start_voting"/>
+  <permission-map name="Access contents information" acquired="False">
+   <permission-role>Anonymous</permission-role>
+  </permission-map>
+  <permission-map name="Modify portal content" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="View" acquired="False">
+   <permission-role>Anonymous</permission-role>
+  </permission-map>
+  <permission-map name="Content Ratings: User Rate" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Popoll: Add polls" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+   <permission-role>Elector</permission-role>
+  </permission-map>
+  <permission-map name="Popoll: Vote" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+ </state>
+
+ <state state_id="voting" title="Bajo votación"
+        i18n:attributes="title">
+  <description i18n:translate="">
+    La propuesta se está votando.
   </description>
   <exit-transition transition_id="archive"/>
   <permission-map name="Access contents information" acquired="False">
@@ -84,6 +135,15 @@
   <permission-map name="Content Ratings: User Rate" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Popoll: Add polls" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Popoll: Vote" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+   <permission-role>Elector</permission-role>
   </permission-map>
  </state>
 
@@ -106,6 +166,14 @@
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
+  <permission-map name="Popoll: Add polls" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Popoll: Vote" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
  </state>
 
  <state state_id="archived" title="Archivada"
@@ -124,6 +192,14 @@
    <permission-role>Anonymous</permission-role>
   </permission-map>
   <permission-map name="Content Ratings: User Rate" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Popoll: Add polls" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Popoll: Vote" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
@@ -163,6 +239,16 @@
              before_script="" after_script=""
              i18n:attributes="title">
   <action url="%(content_url)s/content_status_modify?workflow_action=promote" category="workflow" icon="" i18n:translate="">Promocionar a plenario</action>
+  <guard>
+   <guard-permission>Review portal content</guard-permission>
+  </guard>
+ </transition>
+
+ <transition transition_id="start_voting" title="Comenzar votación"
+             new_state="voting" trigger="USER"
+             before_script="" after_script=""
+             i18n:attributes="title">
+  <action url="%(content_url)s/content_status_modify?workflow_action=start_voting" category="workflow" icon="" i18n:translate="">Comenzar votación</action>
   <guard>
    <guard-permission>Review portal content</guard-permission>
   </guard>
