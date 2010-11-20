@@ -35,7 +35,7 @@ class IProposal(Interface):
     """
 
     title = schema.TextLine(
-        title=_(u'Eslogan'),
+        title=_(u'Asunto'),
         )
 
     description = schema.Text(
