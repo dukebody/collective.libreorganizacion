@@ -25,6 +25,13 @@
       <role name="Editor" />
     </permission>
 
+    <!-- normal users can't share content by default -->
+    <permission
+        name="Sharing page: Delegate roles"
+        acquire="False">
+      <role name="Manager" />
+      <role name="Editor" />
+    </permission>
 
     <!-- support -->
     <permission
