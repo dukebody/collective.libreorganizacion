@@ -11,6 +11,7 @@
  <permission>Access contents information</permission>
  <permission>Modify portal content</permission>
  <permission>View</permission>
+ <permission>Delete objects</permission>
 
  <permission>Content Ratings: User Rate</permission>
 
@@ -40,6 +41,10 @@
    <permission-role>Owner</permission-role>
    <permission-role>Reader</permission-role>
   </permission-map>
+  <permission-map name="Delete objects" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
   <permission-map name="Content Ratings: User Rate" acquired="False">
   </permission-map>
   <permission-map name="Popoll: Add polls" acquired="False">
@@ -67,6 +72,10 @@
   </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
+  </permission-map>
+  <permission-map name="Delete objects" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="Content Ratings: User Rate" acquired="False">
    <permission-role>Elector</permission-role>
@@ -97,6 +106,10 @@
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
   </permission-map>
+  <permission-map name="Delete objects" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
   <permission-map name="Content Ratings: User Rate" acquired="False">
   </permission-map>
   <permission-map name="Popoll: Add polls" acquired="False">
@@ -126,6 +139,10 @@
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
   </permission-map>
+  <permission-map name="Delete objects" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
   <permission-map name="Content Ratings: User Rate" acquired="False">
   </permission-map>
   <permission-map name="Popoll: Add polls" acquired="False">
@@ -154,6 +171,10 @@
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
   </permission-map>
+  <permission-map name="Delete objects" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
   <permission-map name="Content Ratings: User Rate" acquired="False">
   </permission-map>
   <permission-map name="Popoll: Add polls" acquired="False">
@@ -180,6 +201,10 @@
   </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
+  </permission-map>
+  <permission-map name="Delete objects" acquired="False">
+   <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="Content Ratings: User Rate" acquired="False">
   </permission-map>
