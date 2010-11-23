@@ -1,0 +1,130 @@
+<html 
+   xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:tal="http://xml.zope.org/namespaces/tal"
+   xmlns:metal="http://xml.zope.org/namespaces/metal"
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+   metal:use-macro="here/main_template/macros/master"
+   i18n:domain="plonepopoll"
+   xml:lang="en-US"
+   lang="en-US">
+
+  <tal:comment replace="nothing">
+    ##############
+    Poll main view
+    ##############
+    $Id: plonepopoll_view.pt 52252 2007-10-23 14:23:28Z zegor $
+  </tal:comment>
+
+  <div metal:fill-slot="main">
+    <metal:macro define-macro="plonepopoll_view"
+                 tal:define="number here/getNumber_of_choices;
+                             canVote context/canVote;
+                             wf_state context/@@plone_context_state/workflow_state">
+    
+    <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+    <h1 class="documentFirstHeading"> 
+      <metal:field use-macro="python:here.widget('title', mode='view')">
+        Title
+      </metal:field>
+    </h1>
+
+    <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+    <p tal:condition="canVote"
+       i18n:translate="description_vote">
+      You can vote at most for <span i18n:name="number" tal:replace="number">#</span> choice(s) on the poll. If you vote again, your old vote is replaced by the new vote.
+    </p>
+
+    <p i18n:translate="text_not_enable"
+       tal:condition="not: context/isEnabled">
+      The poll is not enabled.
+    </p>
+
+    <form class="group"
+          name="results"
+          action=""
+          method="post"
+          enctype="multipart/form-data"
+          tal:define="object_url python:here.absolute_url();"
+          tal:attributes="action string:${object_url}/vote">
+
+      <p class="documentDescription">
+        <metal:field use-macro="python:here.widget('question', mode='view')">
+          Description
+        </metal:field>
+      </p>
+
+      <div tal:replace="structure provider:plone.abovecontentbody" />
+
+      <fieldset>
+        <ul>
+        <li tal:repeat="choice here/getResults">
+          <input class="noborder"
+                 name="choices"
+                 tal:attributes="value repeat/choice/index;
+                                 id    string:cb${repeat/choice/index};
+                                 type python:test((number > 1), 'checkbox', 'radio');"
+                 tal:condition="canVote"/>
+          <span tal:replace="python:choice[0]">
+            Choice
+          </span>
+          <!-- transient results -->
+          <div tal:condition="python:context.isVisible() and (context.hasVoted() or context.getShowCurrentResults()) or wf_state == 'closed'">
+            <tal:block 
+               tal:define="choice_count      python: choice[1];
+                           choice_percentage python: '%0.2f'%choice[2];
+                           bar_percentage    python: int(choice[2]) or 1;
+			   num repeat/choice/number;
+                           num python:num % 10">
+              <img height="10" tal:attributes="width string:${bar_percentage}; src string:${portal_url}/bar_${num}.gif; alt string:${choice_percentage}%" />
+
+              <span tal:content="structure string:${choice_count} (${choice_percentage}%)">150 (14%)</span>
+            </tal:block>
+          </div>
+        </li>
+        </ul>
+      </fieldset>
+
+      <div class="field"
+           tal:define="vote_count python:here.getVotesCount()">
+        <fieldset>
+          
+          <legend i18n:translate="legend_total_votes">Total votes</legend>
+          
+          <div i18n:translate="text_votes_count">
+            <span i18n:name="vote_count" tal:content="structure string:${vote_count}">
+              people have voted on this poll.
+            </span>
+            votes on this poll.
+          </div>
+          <div tal:condition="python: here.getNumber_of_choices() > 1"
+               tal:define="person_count here/getPersonVoteCount"
+               i18n:translate="text_person_vote_count">
+            (<span i18n:name="person_count" tal:replace="person_count">#</span> persons have voted)
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="formControls">
+        <input class="context"
+               type="submit"
+               name="vote"
+               value="Vote"
+               i18n:attributes="value"
+               tal:condition="canVote" />
+        <input class="context"
+               type="submit"
+               name="clear"
+               value="Clear results"
+               i18n:attributes="value"
+               tal:condition="python: here.portal_membership.checkPermission('Popoll: Edit polls', here)" />
+      </div>
+    </form>
+    <div metal:use-macro="here/document_relateditems/macros/relatedItems">
+      show related items if they exist
+    </div>
+    <div tal:replace="structure provider:plone.belowcontentbody" />
+    </metal:macro>
+  </div>
+</html>

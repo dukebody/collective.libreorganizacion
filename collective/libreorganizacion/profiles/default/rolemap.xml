@@ -44,8 +44,6 @@
         name="Popoll: Vote"
         acquire="False">
       <role name="Manager" />
-      <role name="Editor" />
-      <role name="Elector" />
     </permission>
     <permission
         name="Popoll: Edit polls"

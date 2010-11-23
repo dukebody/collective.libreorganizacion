@@ -64,4 +64,10 @@
       handler=".subscribers.proposal_transition_dispatch"
       />
 
+  <subscriber
+      for="Products.PlonePopoll.interfaces.IPlonePopoll
+           Products.DCWorkflow.interfaces.IAfterTransitionEvent"
+      handler=".subscribers.poll_transition_dispatch"
+      />
+
 </configure>
