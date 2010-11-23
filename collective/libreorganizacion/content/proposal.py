@@ -3,12 +3,11 @@
 # CMF and Zope imports
 from zope import schema
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
-from zope.interface import Interface, implements
+from zope.interface import Interface
 
 from plone.dexterity.content import Container
 from plone.app.textfield import RichText
 from plone.namedfile.field import NamedImage
-from Products.CMFPlone.interfaces import INonStructuralFolder
 
 from collective.libreorganizacion import _
 
@@ -72,5 +71,5 @@ class IProposal(Interface):
 
 
 class Proposal(Container):
-    """Container type with a marker interface ad-hoc to allow comments."""
-    implements(INonStructuralFolder)
+    """Proposal class, to add custom features."""
+    pass
