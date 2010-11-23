@@ -58,4 +58,10 @@
       write_expr="python:checkPermission('Content Ratings: User Rate', context)"
       />
 
+  <subscriber
+      for="collective.libreorganizacion.content.proposal.IProposal
+           Products.DCWorkflow.interfaces.IAfterTransitionEvent"
+      handler=".subscribers.proposal_transition_dispatch"
+      />
+
 </configure>
