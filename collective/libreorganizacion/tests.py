@@ -31,6 +31,7 @@ class LibreOrganizacionLayer(PloneSandboxLayer):
         import collective.libreorganizacion
         xmlconfig.file('configure.zcml', collective.libreorganizacion,
                        context=configurationContext)
+        z2.installProduct(app, 'Products.PlonePopoll')
         z2.installProduct(app, 'collective.libreorganizacion')
 
     def setUpPloneSite(self, portal):
