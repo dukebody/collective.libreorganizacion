@@ -5,6 +5,7 @@
               xmlns:cmf="http://namespaces.zope.org/cmf"
               xmlns:grok="http://namespaces.zope.org/grok"
               xmlns:contentratings="http://namespaces.plone.org/contentratings"
+	      xmlns:monkey="http://namespaces.plone.org/monkey"
               i18n_domain="collective.libreorganizacion" >
 
   <five:registerPackage package="." initialize=".initialize" />
@@ -14,6 +15,13 @@
 
   <!-- Grok the package to initialise schema interfaces and content classes -->
   <grok:grok package="." />
+
+  <monkey:patch
+      description="Allow comments on folderish objects with p.a.discussion"
+      class="plone.app.discussion.conversation.Conversation"
+      original="enabled"
+      replacement=".conversation.enabled"
+      />
 
   <genericsetup:registerProfile
       name="default"

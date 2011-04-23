@@ -33,6 +33,7 @@ setup(name='collective.libreorganizacion',
           'plone.app.discussion',
           'plone.contentratings',
           'Products.PlonePopoll',
+          'collective.monkeypatcher',
       ],
       extras_require={
           'test': [
