@@ -18,6 +18,8 @@
  <permission>Popoll: Add polls</permission>
  <permission>Popoll: Vote</permission>
 
+ <permission>Reply to item</permission>
+
 
  <state state_id="draft" title="Borrador" i18n:attributes="title">
   <description i18n:translate="">
@@ -55,6 +57,9 @@
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
+  <permission-map name="Reply to item" acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
  </state>
 
  <state state_id="pending" title="Buscando apoyos"
@@ -87,6 +92,11 @@
   <permission-map name="Popoll: Vote" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Reply to item" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Editor</permission-role>
+   <permission-role>Elector</permission-role>
   </permission-map>
  </state>
 
@@ -121,6 +131,11 @@
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
+  <permission-map name="Reply to item" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Editor</permission-role>
+   <permission-role>Elector</permission-role>
+  </permission-map>
  </state>
 
  <state state_id="voting" title="Bajo votación"
@@ -154,6 +169,9 @@
    <permission-role>Manager</permission-role>
    <permission-role>Elector</permission-role>
   </permission-map>
+  <permission-map name="Reply to item" acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
  </state>
 
  <state state_id="expired" title="Caducada"
@@ -185,6 +203,9 @@
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
+  <permission-map name="Reply to item" acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
  </state>
 
  <state state_id="archived" title="Archivada"
@@ -214,6 +235,9 @@
   </permission-map>
   <permission-map name="Popoll: Vote" acquired="False">
    <permission-role>Editor</permission-role>
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Reply to item" acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
  </state>
