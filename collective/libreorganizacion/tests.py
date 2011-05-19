@@ -59,6 +59,9 @@ LIBREORGANIZACION_FUNCTIONAL_TESTING = FunctionalTesting(bases=(LIBREORGANIZACIO
 class TestProductInstall(unittest.TestCase):
     layer = LIBREORGANIZACION_INTEGRATION_TESTING
 
+    def getPermissions(self, obj, role):
+        return [p['name'] for p in obj.permissionsOfRole(role) if p['selected']]
+
     def testTypesInstalled(self):
         pt = getToolByName(self.layer['portal'], 'portal_types')
         self.failUnless('collective.libreorganizacion.proposal' in pt.objectIds(),
@@ -107,14 +110,101 @@ class TestProductInstall(unittest.TestCase):
     def testElectorsCanCommentOnProposals(self):
         """Comprobar que un Elector puede comentar las propuestas"""
         portal = self.layer['portal']
-        permissions = [p['name'] for p in portal.permissionsOfRole('Elector') if p['selected']]
-        self.assertTrue('Reply to item' in permissions)
+        self.assertTrue('Reply to item' in self.getPermissions(portal, 'Elector'))
 
     def testNonElectorsCantCommentOnProposals(self):
         """Comprobar que un no Elector NO puede comentar las propuestas"""
         portal = self.layer['portal']
-        permissions = [p['name'] for p in portal.permissionsOfRole('Member') if p['selected']]
-        self.assertFalse('Reply to item' in permissions)
+        self.assertFalse('Reply to item' in self.getPermissions(portal, 'Member'))
+
+    def testProposalWorkflowChain(self):
+        """Check the whole Proposal workflow chain for a proposal
+        that gets to plenary.
+        """
+
+        portal = self.layer['portal']
+        wt = portal.portal_workflow
+
+        setRoles(portal, TEST_USER_NAME, ['Manager', 'Member'])
+        login(portal, TEST_USER_NAME)
+        self.layer['folder'].invokeFactory('collective.libreorganizacion.proposal', 'proposal')
+        proposal = self.layer['folder']['proposal']
+
+        # It starts as a draft
+        self.assertEqual(wt.getInfoFor(proposal, 'review_state'), 'draft')
+        # In this state, Electors can't comment
+        self.assertFalse('Reply to item' in self.getPermissions(proposal, 'Elector'))
+        # and noone else can see the item
+        self.assertFalse('View' in self.getPermissions(proposal, 'Anonymous'))
+        # The creator can edit it, but not the rest of electors
+        self.assertTrue('Modify portal content' in self.getPermissions(proposal, 'Owner'))
+        self.assertFalse('Modify portal content' in self.getPermissions(proposal, 'Elector'))
+
+        # After submitting, the proposal becomes visible
+        wt.doActionFor(proposal, 'submit')
+        self.assertTrue('View' in self.getPermissions(proposal, 'Anonymous'))
+        # and can be supported by electors, but not by other users
+        self.assertTrue('Content Ratings: User Rate' in self.getPermissions(proposal, 'Elector'))
+        self.assertFalse('Content Ratings: User Rate' in self.getPermissions(proposal, 'Reader'))
+        self.assertFalse('Content Ratings: User Rate' in self.getPermissions(proposal, 'Editor'))
+        self.assertFalse('Content Ratings: User Rate' in self.getPermissions(proposal, 'Reviewer'))
+        # It's no longer editable by its owner
+        self.assertFalse('Modify portal content' in self.getPermissions(proposal, 'Owner'))
+        # Comments are enabled now for electors
+        self.assertTrue('Reply to item' in self.getPermissions(proposal, 'Elector'))
+
+
+        # Once the proposal gets enough upvotes, it is promoted to plenary.
+        wt.doActionFor(proposal, 'promote')
+        # In this state, supporting votes are no longer allowed
+        self.assertFalse('Content Ratings: User Rate' in self.getPermissions(proposal, 'Elector'))
+        # but we can still comment
+        self.assertTrue('Reply to item' in self.getPermissions(proposal, 'Elector'))
+
+
+        # Voting is started! No more bla bla
+        wt.doActionFor(proposal, 'start_voting')
+        self.assertFalse('Reply to item' in self.getPermissions(proposal, 'Elector'))
+        # nor can we support the proposal
+        self.assertFalse('Content Ratings: User Rate' in self.getPermissions(proposal, 'Elector'))
+        # or edit it
+        self.assertFalse('Modify portal content' in self.getPermissions(proposal, 'Owner'))
+        self.assertFalse('Modify portal content' in self.getPermissions(proposal, 'Elector'))
+
+        # but we can vote, of course
+        self.assertTrue('Popoll: Vote' in self.getPermissions(proposal, 'Elector'))
+
+
+        # Voting is finished! We can't vote anymore
+        wt.doActionFor(proposal, 'archive')
+        self.assertFalse('Popoll: Vote' in self.getPermissions(proposal, 'Elector'))
+        # but the proposal remains visible
+        self.assertTrue('View' in self.getPermissions(proposal, 'Anonymous'))
+
+
+    def testProposalExpired(self):
+        """Check the Proposal workflow chain expired state
+        for a proposal that doesn't get enough support and expires.
+        """
+
+        portal = self.layer['portal']
+        wt = portal.portal_workflow
+
+        setRoles(portal, TEST_USER_NAME, ['Manager', 'Member'])
+        login(portal, TEST_USER_NAME)
+        self.layer['folder'].invokeFactory('collective.libreorganizacion.proposal', 'proposal')
+        proposal = self.layer['folder']['proposal']
+
+        wt.doActionFor(proposal, 'submit')
+        wt.doActionFor(proposal, 'expire')
+
+        # The proposal remains visible
+        self.assertTrue('View' in self.getPermissions(proposal, 'Anonymous'))
+        # But it can't be supported
+        self.assertFalse('Content Ratings: User Rate' in self.getPermissions(proposal, 'Elector'))
+
+        # And we can't discuss about it
+        self.assertFalse('Reply to item' in self.getPermissions(proposal, 'Elector'))
 
 
 def test_suite():
