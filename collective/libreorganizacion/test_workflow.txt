@@ -1,0 +1,150 @@
+Proposal workflow
+====================
+
+This doctest describes the common workflow of a proposal, from its
+creation to its archive, including its promotion to plenary and voting.
+
+The graph is as follows:
+    'Draft' → 'Pending',
+    'Pending' → 'Plenary',
+    'Plenary' → 'Voting',
+    'Voting' → 'Archived'.
+
+
+Let's get to work. First, we set up the machinery:
+
+    >>> from plone.app.testing import setRoles, login, TEST_USER_NAME
+    >>> portal = layer['portal']
+    >>> wt = portal.portal_workflow
+    >>> setRoles(portal, TEST_USER_NAME, ['Manager', 'Member'])
+    >>> login(portal, TEST_USER_NAME)
+    >>> def getPermissions(obj, role):
+    ...     return [p['name'] for p in obj.permissionsOfRole(role) if p['selected']]
+
+A proposal is a certain topic to be discussed within the
+organization. Let's create one:
+
+    >>> dummy = layer['folder'].invokeFactory('collective.libreorganizacion.proposal', 'proposal')
+    >>> proposal = layer['folder']['proposal']
+
+The proposal starts as a draft, only visible by its creator:
+
+    >>> wt.getInfoFor(proposal, 'review_state')
+    'draft'
+    >>> 'View' in getPermissions(proposal, 'Anonymous')
+    False
+
+
+In this state, Electors can't comment:
+
+    >>> 'Reply to item' in getPermissions(proposal, 'Elector')
+    False
+
+The creator can edit it, but not the rest of the electors:
+
+    >>> 'Modify portal content' in getPermissions(proposal, 'Owner')
+    True
+    >>> 'Modify portal content' in getPermissions(proposal, 'Elector')
+    False
+
+
+Once the creator decides that the proposal is ready, she/he publishes it:
+
+    >>> wt.doActionFor(proposal, 'submit')
+
+It now becomes visible to everyone, but can't be modified anymore by
+its owner:
+
+    >>> 'View' in getPermissions(proposal, 'Anonymous')
+    True
+    >>> 'Modify portal content' in getPermissions(proposal, 'Owner')
+    False
+
+Before the proposal is accepted for debate and it must receive enough support from
+the electors. The supporting is managed through a plone.contentratings
+category, and only Electors can show support:
+
+    >>> 'Content Ratings: User Rate' in getPermissions(proposal, 'Elector')
+    True
+    >>> 'Content Ratings: User Rate' in getPermissions(proposal, 'Reader')
+    False
+    >>> 'Content Ratings: User Rate' in getPermissions(proposal, 'Editor')
+    False
+    >>> 'Content Ratings: User Rate' in getPermissions(proposal, 'Reviewer')
+    False
+
+Also, Electors can now comment on the proposal to argue about why it
+should be supported or not:
+
+    >>> 'Reply to item' in getPermissions(proposal, 'Elector')
+    True
+
+
+Once the proposal gets enough upvotes, it is promoted to Plenary for
+everyone to debate about it before the voting starts:
+
+    >>> wt.doActionFor(proposal, 'promote')
+
+In this state, showing support is no longer allowed, since it's
+already in the Plenary:
+
+    >>> 'Content Ratings: User Rate' in getPermissions(proposal, 'Elector')
+    False
+
+But we can still comment and debate of course:
+
+    >>> 'Reply to item' in getPermissions(proposal, 'Elector')
+    True
+
+After a while, the debate is over and we decide to vote:
+
+    >>> wt.doActionFor(proposal, 'start_voting')
+    >>> 'Reply to item' in getPermissions(proposal, 'Elector')
+    False
+    >>> 'Popoll: Vote' in getPermissions(proposal, 'Elector')
+    True
+
+    
+The proposal can't be supported or modified while voting:
+
+    >>> 'Content Ratings: User Rate' in getPermissions(proposal, 'Elector')
+    False
+    >>> 'Modify portal content' in getPermissions(proposal, 'Owner')
+    False
+    >>> 'Modify portal content' in getPermissions(proposal, 'Elector')
+    False
+
+
+Voting is finished! We can't vote anymore:
+
+    >>> wt.doActionFor(proposal, 'archive')
+    >>> 'Popoll: Vote' in getPermissions(proposal, 'Elector')
+    False
+    
+But the proposal remains visible:
+    >>> 'View' in getPermissions(proposal, 'Anonymous')
+    True
+
+
+
+Not so popular proposals
+-------------------------
+
+Some proposals don't gain enough support and they never reach the Plenary.
+
+    >>> dummy = layer['folder'].invokeFactory('collective.libreorganizacion.proposal', 'proposal2')
+    >>> proposal = layer['folder']['proposal2']
+
+    >>> wt.doActionFor(proposal, 'submit')
+    >>> wt.doActionFor(proposal, 'expire')
+
+The proposal remains visible:
+    >>> 'View' in getPermissions(proposal, 'Anonymous')
+    True
+
+But it can't be supported after expired, nor can we discuss about it:
+    >>> 'Content Ratings: User Rate' in getPermissions(proposal, 'Elector')
+    False
+    >>> 'Reply to item' in getPermissions(proposal, 'Elector')
+    False
+
