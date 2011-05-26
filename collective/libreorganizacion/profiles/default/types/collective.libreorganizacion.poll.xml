@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
-<object name="collective.libreorganizacion.proposal" meta_type="Dexterity FTI"
+<object name="collective.libreorganizacion.poll" meta_type="Dexterity FTI"
    i18n:domain="collective.libreorganizacion" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
  <!-- Basic metadata -->
- <property name="title" i18n:translate="">Propuesta</property>
- <property name="description" i18n:translate="">Una propuesta te permite abrir un debate y puede acabar siendo votada por el electorado o descartada por falta de apoyo.</property>
+ <property name="title" i18n:translate="">Votacion</property>
+ <property name="description" i18n:translate="">Una votación tiene dos o más opciones de voto sobre las que decidir en relación con una propuesta determinada.</property>
  <property name="content_icon">document_icon.gif</property>
  <property name="allow_discussion">True</property>
  <property name="global_allow">True</property>
  <property name="filter_content_types">True</property>
  <property name="allowed_content_types">
-   <element value="collective.libreorganizacion.poll" />
+   <element value="collective.libreorganizacion.option" />
  </property>
 
  <!-- schema interface -->
- <property name="schema">collective.libreorganizacion.content.proposal.IProposal</property>
+ <property name="schema">collective.libreorganizacion.content.poll.IPoll</property>
 
  <!-- class used for content items -->
  <property name="klass">collective.libreorganizacion.content.proposal.Proposal</property>
 
  <!-- add permission -->
- <property name="add_permission">collective.libreorganizacion.AddProposal</property>
+ <property name="add_permission">collective.libreorganizacion.AddPoll</property>
 
  <!-- enabled behaviors -->
  <property name="behaviors">

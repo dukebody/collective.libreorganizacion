@@ -11,26 +11,18 @@ def proposal_transition_dispatch(proposal, event):
     # create a skeleton poll when the proposal hits the plenary
     if IAfterTransitionEvent.providedBy(event) and\
         event.old_state.id == 'pending' and event.new_state.id == 'plenary':
-        proposal.invokeFactory('PlonePopoll', 'poll')
+        proposal.invokeFactory('collective.libreorganizacion.poll', 'poll')
 
-        poll = proposal.poll
+        poll = proposal['poll']
         poll.setTitle('Votación')
         poll.setDescription('¡Participa!')
-        poll.setQuestion('Si no hubiera una opción de voto que le satisfaga, añada la suya.')
-        poll.setChoices('Voto en blanco')
-        poll.setNumber_of_choices(1)
-        poll.setVisible(False)
-        poll.setShowCurrentResults(False)
-        poll.setEnabled(False)
-        poll.update()
-
 
     # start the poll when the voting on the proposal starts
     if IAfterTransitionEvent.providedBy(event) and\
         event.old_state.id == 'plenary' and event.new_state.id == 'voting':
         wft = getToolByName(proposal, 'portal_workflow')
 
-        poll = proposal.poll
+        poll = proposal['poll']
 
         # start poll voting
         status = wft.getStatusOf('collective.libreorganizacion.poll_workflow', poll)
@@ -43,7 +35,7 @@ def proposal_transition_dispatch(proposal, event):
         event.old_state.id == 'voting' and event.new_state.id == 'archived':
         wft = getToolByName(proposal, 'portal_workflow')
 
-        poll = proposal.poll
+        poll = proposal['poll']
 
         # close poll voting
         status = wft.getStatusOf('collective.libreorganizacion.poll_workflow', poll)

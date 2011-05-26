@@ -125,4 +125,5 @@ def test_suite():
     suite = TestSuite()
     suite.addTest(makeSuite(TestProductInstall))
     suite.addTest(layered(doctest.DocFileSuite('test_workflow.txt'), LIBREORGANIZACION_INTEGRATION_TESTING))
+    suite.addTest(layered(doctest.DocFileSuite('test_poll.txt'), LIBREORGANIZACION_INTEGRATION_TESTING))
     return suite

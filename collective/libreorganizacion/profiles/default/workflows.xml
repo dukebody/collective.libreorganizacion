@@ -6,7 +6,7 @@
     <type type_id="collective.libreorganizacion.proposal">
       <bound-workflow workflow_id="collective.libreorganizacion.proposal_workflow" />
     </type>
-    <type type_id="PlonePopoll">
+    <type type_id="collective.libreorganizacion.poll">
       <bound-workflow workflow_id="collective.libreorganizacion.poll_workflow" />
     </type>
   </bindings>

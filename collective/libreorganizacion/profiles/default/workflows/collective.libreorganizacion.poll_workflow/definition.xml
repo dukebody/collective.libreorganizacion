@@ -14,7 +14,7 @@
  <permission>Modify portal content</permission>
  <permission>View</permission>
 
- <permission>Popoll: Vote</permission>
+ <permission>collective.libreorganizacion: Add Option</permission>
 
 
  <state state_id="draft" title="Borrador" i18n:attributes="title">
@@ -44,7 +44,7 @@
    <permission-role>Reader</permission-role>
    <permission-role>Elector</permission-role>
   </permission-map>
-  <permission-map name="Popoll: Vote"
+  <permission-map name="collective.libreorganizacion: Add Option"
                   acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
@@ -67,7 +67,7 @@
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
   </permission-map>
-  <permission-map name="Popoll: Vote"
+  <permission-map name="collective.libreorganizacion: Add Option"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Elector</permission-role>
@@ -90,7 +90,7 @@
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
   </permission-map>
-  <permission-map name="Popoll: Vote"
+  <permission-map name="collective.libreorganizacion: Add Option"
                   acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>

@@ -43,6 +43,17 @@
       title="collective.libreorganizacion: Add Proposal"
       />
 
+  <permission
+      id="collective.libreorganizacion.AddPoll"
+      title="collective.libreorganizacion: Add Poll"
+      />
+
+  <permission
+      id="collective.libreorganizacion.AddOption"
+      title="collective.libreorganizacion: Add Option"
+      />
+
+
   <!-- supporting stuff -->
   <utility
       name="collective.libreorganizacion.support_vocab"
@@ -77,5 +88,8 @@
            Products.DCWorkflow.interfaces.IAfterTransitionEvent"
       handler=".subscribers.poll_transition_dispatch"
       />
+
+  <!-- Register the ratings adapter -->
+  <adapter factory=".voting.Voting" />
 
 </configure>

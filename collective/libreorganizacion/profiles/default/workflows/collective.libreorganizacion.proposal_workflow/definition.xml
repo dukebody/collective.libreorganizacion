@@ -15,7 +15,7 @@
 
  <permission>Content Ratings: User Rate</permission>
 
- <permission>Popoll: Add polls</permission>
+ <permission>collective.libreorganizacion: Add Poll</permission>
  <permission>Popoll: Vote</permission>
 
  <permission>Reply to item</permission>
@@ -49,7 +49,7 @@
   </permission-map>
   <permission-map name="Content Ratings: User Rate" acquired="False">
   </permission-map>
-  <permission-map name="Popoll: Add polls" acquired="False">
+  <permission-map name="collective.libreorganizacion: Add Poll" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
@@ -85,7 +85,7 @@
   <permission-map name="Content Ratings: User Rate" acquired="False">
    <permission-role>Elector</permission-role>
   </permission-map>
-  <permission-map name="Popoll: Add polls" acquired="False">
+  <permission-map name="collective.libreorganizacion: Add Poll" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
@@ -122,7 +122,7 @@
   </permission-map>
   <permission-map name="Content Ratings: User Rate" acquired="False">
   </permission-map>
-  <permission-map name="Popoll: Add polls" acquired="False">
+  <permission-map name="collective.libreorganizacion: Add Poll" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
    <permission-role>Elector</permission-role>
@@ -160,7 +160,7 @@
   </permission-map>
   <permission-map name="Content Ratings: User Rate" acquired="False">
   </permission-map>
-  <permission-map name="Popoll: Add polls" acquired="False">
+  <permission-map name="collective.libreorganizacion: Add Poll" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
@@ -195,7 +195,7 @@
   </permission-map>
   <permission-map name="Content Ratings: User Rate" acquired="False">
   </permission-map>
-  <permission-map name="Popoll: Add polls" acquired="False">
+  <permission-map name="collective.libreorganizacion: Add Poll" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
@@ -229,7 +229,7 @@
   </permission-map>
   <permission-map name="Content Ratings: User Rate" acquired="False">
   </permission-map>
-  <permission-map name="Popoll: Add polls" acquired="False">
+  <permission-map name="collective.libreorganizacion: Add Poll" acquired="False">
    <permission-role>Editor</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>

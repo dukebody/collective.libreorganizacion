@@ -1,0 +1,73 @@
+Poll testing
+============
+
+This doctest describes how polls inside proposals work, including
+creating them, adding voting options, voting and getting the results.
+
+The poll workflow graph is as simple as follows:
+    'Draft' → 'Voting',
+    'Voting' → 'Closed'.
+
+Let's get to work! First some basic setup stuff:
+
+    >>> from plone.app.testing import setRoles, login, TEST_USER_NAME
+    >>> portal = layer['portal']
+    >>> wt = portal.portal_workflow
+    >>> setRoles(portal, TEST_USER_NAME, ['Manager', 'Member'])
+    >>> login(portal, TEST_USER_NAME)
+    >>> def getPermissions(obj, role):
+    ...     return [p['name'] for p in obj.permissionsOfRole(role) if p['selected']]
+
+We need a proposal first to contain the poll:
+
+    >>> dummy = layer['folder'].invokeFactory('collective.libreorganizacion.proposal', 'proposal')
+    >>> proposal = layer['folder']['proposal']
+
+After promoting the proposal to Plenary, an empty Poll is created
+automatically:
+
+    >>> wt.doActionFor(proposal, 'submit')
+    >>> wt.doActionFor(proposal, 'promote')
+    >>> 'poll' in proposal
+    True
+    >>> poll = proposal['poll']
+    >>> poll.items()
+    []
+
+The poll starts as a draft:
+
+    >>> wt.getInfoFor(poll, 'review_state')
+    'draft'
+
+As Electors, we can add options to it:
+
+    >>> dummy = poll.invokeFactory('collective.libreorganizacion.option', 'option1')
+    >>> poll['option1'].title = 'A first option'
+    >>> poll['option1'].description = 'The first description'
+    >>> dummy = poll.invokeFactory('collective.libreorganizacion.option', 'option2')
+    >>> poll['option2'].title = 'A second option'
+    >>> poll['option2'].description = 'The second description'
+
+And they now show as available options:
+
+    >>> poll.keys()
+    ['option1', 'option2']
+
+To vote, we have to use the IVoting interface:
+
+    >>> from collective.libreorganizacion.voting import IVoting
+    >>> voting = IVoting(poll)
+    >>> voting.vote(TEST_USER_NAME, 'option2')
+
+It's easy to retrieve the results as a dictionary:
+
+    >>> voting.results == {'option1': 0, 'option2': 1}
+    True
+
+An Elector can only vote once. If we try to vote again, we get an error:
+
+    >>> voting.vote(TEST_USER_NAME, 'option1')
+    Traceback (most recent call last):
+    ...
+    KeyError: 'Voting not available for test_user_1_'
+
