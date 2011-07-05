@@ -34,6 +34,7 @@ setup(name='collective.libreorganizacion',
           'plone.contentratings',
           'Products.PlonePopoll',
           'collective.monkeypatcher',
+          'python-vote-core',
       ],
       extras_require={
           'test': [

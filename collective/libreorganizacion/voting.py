@@ -10,6 +10,8 @@ from zope.component import adapts
 
 from zope.annotation.interfaces import IAnnotations
 
+from pyvotecore.plurality import Plurality
+
 from collective.libreorganizacion.content.poll import IPoll
 
 from collective.libreorganizacion import _
@@ -125,7 +127,8 @@ class Voting(object):
 
     @property
     def results(self):
-        return self.votes
+        input = [{'ballot':option, 'count':count} for option, count in self.votes.items()]
+        return Plurality(input).as_dict()
         
     def available(self, user_token):
         return not self.electors.has_key(user_token)

@@ -61,7 +61,15 @@ To vote, we have to use the IVoting interface:
 
 It's easy to retrieve the results as a dictionary:
 
-    >>> voting.results == {'option1': 0, 'option2': 1}
+self.assertEqual(output, {
+'candidates': set(['c1','c2','c3']),
+'tallies': {'c3': 23, 'c2': 22, 'c1': 26},
+'winner': 'c1'
+})
+    >>> voting.results == {
+    ...     'candidates': set(['option1', 'option2']),
+    ...     'tallies': {'option1': 0, 'option2': 1},
+    ...     'winner': 'option2'}
     True
 
 An Elector can only vote once. If we try to vote again, we get an error:
