@@ -4,7 +4,7 @@
 
  <!-- Basic metadata -->
  <property name="title" i18n:translate="">Votacion</property>
- <property name="description" i18n:translate="">Una votación tiene dos o más opciones de voto sobre las que decidir en relación con una propuesta determinada.</property>
+ <property name="description" i18n:translate="">Una votacion tiene dos o mas opciones de voto sobre las que decidir en relacion con una propuesta determinada.</property>
  <property name="content_icon">document_icon.gif</property>
  <property name="allow_discussion">True</property>
  <property name="global_allow">True</property>

@@ -14,8 +14,8 @@ def proposal_transition_dispatch(proposal, event):
         proposal.invokeFactory('collective.libreorganizacion.poll', 'poll')
 
         poll = proposal['poll']
-        poll.setTitle('Votación')
-        poll.setDescription('¡Participa!')
+        poll.setTitle('Poll')
+        poll.setDescription('Chime in!')
 
     # start the poll when the voting on the proposal starts
     if IAfterTransitionEvent.providedBy(event) and\

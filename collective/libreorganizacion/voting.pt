@@ -11,7 +11,7 @@
               tal:attributes="action context/absolute_url">
             <div i18n:translate="vote_options">
                 Choose a voting option:
-		<tal:options tal:repeat="option view/context/options"
+		<tal:options tal:repeat="option view/voting/options"
 			     i18n:name="voting_options">
                 <input
 		    tal:attributes="value option"

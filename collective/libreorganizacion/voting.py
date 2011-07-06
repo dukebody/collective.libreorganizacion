@@ -152,7 +152,9 @@ class Voting(object):
         return Plurality(input).as_dict()
         
     def available(self, user_token):
-        return not self.electors.has_key(user_token)
+        wf_state = self.wt.getInfoFor(aq_inner(self.context), 'review_state', None)
+
+        return not self.electors.has_key(user_token) and wf_state == 'voting'
                     
     def vote(self, user_token, option):
         if not self.available(user_token):
@@ -190,7 +192,7 @@ class VotingViewlet(BrowserView):
             return
 
         user_token = self.portal_state.member().getId()    
-        if user_token is not None and self.ratings.available(user_token):
+        if user_token is not None and self.voting.available(user_token):
             self.voting.vote(user_token, option)
     
     def has_winner(self):
