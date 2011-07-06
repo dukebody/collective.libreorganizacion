@@ -48,24 +48,42 @@ As Electors, we can add options to it:
     >>> poll['option2'].title = 'A second option'
     >>> poll['option2'].description = 'The second description'
 
-And they now show as available options:
-
-    >>> poll.keys()
-    ['option1', 'option2']
-
-To vote, we have to use the IVoting interface:
+To vote we use the IVoting interface:
 
     >>> from collective.libreorganizacion.voting import IVoting
     >>> voting = IVoting(poll)
+
+We can see the available options:
+
+    >>> voting.options
+    ['option1', 'option2']
+
+Since the poll is not open for voting yet, we can't vote:
+
+    >>> voting.vote(TEST_USER_NAME, 'option2')
+    Traceback (most recent call last):
+    ...
+    Unauthorized: The poll is not open for voting
+
+Let's open the poll:
+
+    >>> wt.doActionFor(poll, 'start')
+
+Now we can vote for any of them:
+
     >>> voting.vote(TEST_USER_NAME, 'option2')
 
-It's easy to retrieve the results as a dictionary:
+We can't retrieve the results before the poll is closed.
 
-self.assertEqual(output, {
-'candidates': set(['c1','c2','c3']),
-'tallies': {'c3': 23, 'c2': 22, 'c1': 26},
-'winner': 'c1'
-})
+    >>> voting.results is None
+    True
+
+Let's close the poll:
+
+    >>> wt.doActionFor(poll, 'close')
+
+Now it's easy to retrieve the results as a dictionary:
+
     >>> voting.results == {
     ...     'candidates': set(['option1', 'option2']),
     ...     'tallies': {'option1': 0, 'option2': 1},

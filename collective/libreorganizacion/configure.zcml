@@ -89,7 +89,16 @@
       handler=".subscribers.poll_transition_dispatch"
       />
 
-  <!-- Register the ratings adapter -->
+  <!-- Register the voting adapter -->
   <adapter factory=".voting.Voting" />
+  
+  <browser:viewlet
+      name="collective.libreorganizacion.voting"
+      for="collective.libreorganizacion.content.poll.IPoll"
+      view="plone.app.layout.globals.interfaces.IViewView"
+      manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
+      class=".voting.VotingViewlet"
+      permission="zope2.View" 
+      />
 
 </configure>

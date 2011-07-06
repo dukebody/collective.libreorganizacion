@@ -1,0 +1,33 @@
+<dl class="portalMessage info" i18n:domain="collective.libreorganizacion">
+    <dt i18n:translate="">
+        Voting
+    </dt>
+    <dd>
+        <div i18n:translate="info_film_rating" tal:condition="view/has_winner">
+            And the winner is: <span i18n:name="winner" tal:replace="view/winner" /> 
+        </div>
+        <form method="get"
+              tal:condition="view/available"
+              tal:attributes="action context/absolute_url">
+            <div i18n:translate="vote_options">
+                Choose a voting option:
+		<tal:options tal:repeat="option view/context/options"
+			     i18n:name="voting_options">
+                <input
+		    tal:attributes="value option"
+                    type="radio"
+                    name="collective.libreorganizacion.voting_option"
+                    value="option1"
+                    /><span tal:replace="option" /><br />
+		</tal:options>
+		<input
+                    type="submit"
+                    name="collective.libreorganizacion.vote"
+                    value="vote"
+                    i18n:attributes="value button_vote"
+                    i18n:name="vote_button"
+                    />
+            </div>
+        </form>
+    </dd>
+</dl>
