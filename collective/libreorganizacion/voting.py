@@ -157,14 +157,14 @@ class Voting(object):
         return not self.electors.has_key(user_token) and wf_state == 'voting'
                     
     def vote(self, user_token, option):
-        if not self.available(user_token):
-            raise KeyError("Voting not available for %s" % user_token)
-
         wf_state = self.wt.getInfoFor(aq_inner(self.context), 'review_state', None)
-
         if wf_state != 'voting':
             # XXX: This should be managed by a permission.
             raise Unauthorized("The poll is not open for voting")
+
+        if not self.available(user_token):
+            raise KeyError("Voting not available for %s" % user_token)
+
         self.electors.insert(user_token)
         self.votes[option] += 1
 

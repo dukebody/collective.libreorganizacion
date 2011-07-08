@@ -73,6 +73,13 @@ Now we can vote for any of them:
 
     >>> voting.vote(TEST_USER_NAME, 'option2')
 
+An Elector can only vote once. If we try to vote again, we get an error:
+
+    >>> voting.vote(TEST_USER_NAME, 'option1')
+    Traceback (most recent call last):
+    ...
+    KeyError: 'Voting not available for test_user_1_'
+
 We can't retrieve the results before the poll is closed.
 
     >>> voting.results is None
@@ -89,11 +96,3 @@ Now it's easy to retrieve the results as a dictionary:
     ...     'tallies': {'option1': 0, 'option2': 1},
     ...     'winner': 'option2'}
     True
-
-An Elector can only vote once. If we try to vote again, we get an error:
-
-    >>> voting.vote(TEST_USER_NAME, 'option1')
-    Traceback (most recent call last):
-    ...
-    KeyError: 'Voting not available for test_user_1_'
-
